@@ -1,0 +1,9 @@
+---
+- hosts: app
+  remote_user: root
+  tasks:
+    - name: 'create user'
+      user: name={{ item.user }} password={{ item.password }}
+      with_items:
+        - { user: 'user01', password: '$1$Gl7DRR4R$fBqSWYwSJqpiflSPJm.660' }
+        - { user: 'user02', password: '$1$uVF6uMpJ$xWJbt3ZfTErBT12FCDuik/' }
