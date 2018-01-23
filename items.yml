@@ -1,0 +1,14 @@
+---
+- hosts: app
+  remote_user: root
+  gather_facts: flase
+  vars:
+    - port: 80
+    - name: 'lose'
+    - path: '/var/www/html/'
+  tasks:
+    - name: 'creat user'
+      user: name={{ item }} remove=yes state=absent
+      with_items:
+        - user01
+        - user02
