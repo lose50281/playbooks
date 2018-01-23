@@ -1,0 +1,23 @@
+---
+- hosts: app
+  remote_user: root
+  vars: 
+    - http_port: 8080
+    - http_timeout: 80
+    - user_name: lose
+  tasks:
+    - name: 'install http'
+      yum: name=httpd state=latest
+      tags: 'install'
+    - name: 'copy configure'
+      template: src=/usr/local/playbooks/template/httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+      notify: configure change restart httpd
+    - name: 'service status'
+      service: name=httpd state=started
+      tags: 'restart'
+    - name: 'index.html configur'
+      template: src=/usr/local/playbooks/template/index.html.j2 dest=/var/www/html/index.html
+      notify: configure change restart httpd
+  handlers:
+    - name: 'configure change restart httpd'
+      service: name=httpd state=restarted
