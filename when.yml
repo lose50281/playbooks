@@ -1,0 +1,8 @@
+---
+- hosts: app
+  remote_user: root
+  tasks:
+    - name: "reboot RedHat system"
+      command: /sbin/reboot
+      when: ansible_os_family == "RedHat"
+      tags: 'reboot'
